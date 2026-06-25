@@ -26,10 +26,11 @@ The first argument is the table name, the second is the schema (a map of column 
 
 The `Norm.types` constructors are:
 
-`id, integer, bigint, string, text, float, double, boolean, datetime, date, json`, plus `raw(sql)` for raw SQL defaults.
+`id, integer, bigint, string, text, float, double, boolean, datetime, date, json, enum`, plus `raw(sql)` for raw SQL defaults.
 
 - **`Norm.types.id()`** is a convenience for an `INT PRIMARY KEY AUTO_INCREMENT` column.
 - **`Norm.types.json()`** (de)serialises automatically — assign a Lua table, read one back.
+- **`Norm.types.enum({ values = { "a", "b" } })`** restricts a string column to a fixed set: native `ENUM` on MySQL, `TEXT` with a `CHECK (… IN …)` constraint on SQLite. Stored and read as a plain string.
 - **`Norm.types.raw(sql)`** injects raw SQL, typically as a column `default` (e.g. `Norm.types.raw("CURRENT_TIMESTAMP")`).
 
 ### Type options
