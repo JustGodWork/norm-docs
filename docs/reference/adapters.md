@@ -1,14 +1,32 @@
+---
+outline: [2, 3]
+---
+
 # Adapters & Providers
 
 The seams that make Norm portable: database adapters, promise providers, and JSON providers.
 
 ::: info Auto-generated
-This page is generated from the source annotations (`scripts/gen-api.mjs`). Edit the doc comments in the Norm sources, not here.
+This page is generated from the source annotations by `scripts/gen-api.mjs`. Edit the LuaCATS doc comments in the Norm sources, not here.
 :::
 
 ## NormAdapter
 
-### default_json_provider
+<small>:link: [Source: `src/adapter.lua`](https://github.com/JustGodWork/norm/blob/master/src/adapter.lua#L22)</small>
+
+| Member | Returns | Description |
+|---|---|---|
+| [`default_json_provider`](#normadapter-default_json_provider) | `NormJsonProvider\|nil` | Optional: the JSON provider native to this adapter's framework, used to |
+| [`default_provider`](#normadapter-default_provider) | `NormPromiseProvider\|nil` | Optional: the promise provider native to this adapter's framework. |
+| [`get_dialect`](#normadapter-get_dialect) | `NormDialect` | Resolved dialect object. |
+| [`get_dialect_name`](#normadapter-get_dialect_name) | `"mysql"\|"sqlite"` | The dialect name this adapter speaks. |
+| [`options`](#normadapter-options) | — |  |
+| [`raw_execute`](#normadapter-raw_execute) | — | Run a write statement. |
+| [`raw_query`](#normadapter-raw_query) | — | Run a SELECT. |
+| [`supports_returning`](#normadapter-supports_returning) | `boolean` | Optional: whether this adapter's engine supports `INSERT ... |
+| [`supports_transactions`](#normadapter-supports_transactions) | `boolean` | Optional: whether this adapter can run an interactive transaction on a pinned |
+
+### default_json_provider <Badge type="info" text="method" /> {#normadapter-default_json_provider}
 
 ```lua
 NormAdapter:default_json_provider()
@@ -18,7 +36,7 @@ NormAdapter:default_json_provider()
 Optional: the JSON provider native to this adapter's framework, used to
 (de)serialise `json` columns. Returning nil lets the ORM auto-detect one.
 
-### default_provider
+### default_provider <Badge type="info" text="method" /> {#normadapter-default_provider}
 
 ```lua
 NormAdapter:default_provider()
@@ -27,7 +45,7 @@ NormAdapter:default_provider()
 
 Optional: the promise provider native to this adapter's framework.
 
-### get_dialect
+### get_dialect <Badge type="info" text="method" /> {#normadapter-get_dialect}
 
 ```lua
 NormAdapter:get_dialect()
@@ -36,7 +54,7 @@ NormAdapter:get_dialect()
 
 Resolved dialect object.
 
-### get_dialect_name
+### get_dialect_name <Badge type="info" text="method" /> {#normadapter-get_dialect_name}
 
 ```lua
 NormAdapter:get_dialect_name()
@@ -51,13 +69,13 @@ return #1:
    | "sqlite"
 ```
 
-### options
+### options <Badge type="info" text="field" /> {#normadapter-options}
 
 ```lua
 NormAdapterOptions
 ```
 
-### raw_execute
+### raw_execute <Badge type="info" text="method" /> {#normadapter-raw_execute}
 
 ```lua
 NormAdapter:raw_execute(query: string, params: any[], callback: NormExecuteCallback)
@@ -65,7 +83,7 @@ NormAdapter:raw_execute(query: string, params: any[], callback: NormExecuteCallb
 
 Run a write statement. Must be overridden.
 
-### raw_query
+### raw_query <Badge type="info" text="method" /> {#normadapter-raw_query}
 
 ```lua
 NormAdapter:raw_query(query: string, params: any[], callback: NormQueryCallback)
@@ -73,7 +91,7 @@ NormAdapter:raw_query(query: string, params: any[], callback: NormQueryCallback)
 
 Run a SELECT. Must be overridden.
 
-### supports_returning
+### supports_returning <Badge type="info" text="method" /> {#normadapter-supports_returning}
 
 ```lua
 NormAdapter:supports_returning()
@@ -86,7 +104,7 @@ auto-increment id atomically from the INSERT itself, instead of a separate
 `LAST_INSERT_ID()` / `last_insert_rowid()` query — which is connection-scoped
 and therefore unreliable across a connection pool. Defaults to false.
 
-### supports_transactions
+### supports_transactions <Badge type="info" text="method" /> {#normadapter-supports_transactions}
 
 ```lua
 NormAdapter:supports_transactions()
@@ -103,7 +121,22 @@ An adapter that returns true MUST implement `transaction(body, finish)`:
 
 ## NormNanosAdapter
 
-### database
+<small>:link: [Source: `src/adapters/nanos.lua`](https://github.com/JustGodWork/norm/blob/master/src/adapters/nanos.lua#L15)</small>
+
+| Member | Returns | Description |
+|---|---|---|
+| [`database`](#normnanosadapter-database) | — | The underlying nanos `Database`. |
+| [`default_json_provider`](#normnanosadapter-default_json_provider) | `NormJsonProvider\|nil` | Nanos exposes a global `JSON` class (`stringify`/`parse`); use it to |
+| [`default_provider`](#normnanosadapter-default_provider) | `NormPromiseProvider\|nil` | If nanos-promise is loaded in this package (global `Promise`), use it. |
+| [`get_dialect`](#normnanosadapter-get_dialect) | `NormDialect` | Resolved dialect object. |
+| [`get_dialect_name`](#normnanosadapter-get_dialect_name) | `"mysql"\|"sqlite"` | return #1: |
+| [`options`](#normnanosadapter-options) | — |  |
+| [`raw_execute`](#normnanosadapter-raw_execute) | — | Run a write. |
+| [`raw_query`](#normnanosadapter-raw_query) | — |  |
+| [`supports_returning`](#normnanosadapter-supports_returning) | `boolean` | SQLite, PostgreSQL and MariaDB (>= 10.5, auto-detected at init) support |
+| [`supports_transactions`](#normnanosadapter-supports_transactions) | `boolean` | Nanos' `Database` exposes no transaction API (no Begin/Commit, no connection |
+
+### database <Badge type="info" text="field" /> {#normnanosadapter-database}
 
 ```lua
 table
@@ -111,7 +144,7 @@ table
 
 The underlying nanos `Database`.
 
-### default_json_provider
+### default_json_provider <Badge type="info" text="method" /> {#normnanosadapter-default_json_provider}
 
 ```lua
 NormNanosAdapter:default_json_provider()
@@ -121,7 +154,7 @@ NormNanosAdapter:default_json_provider()
 Nanos exposes a global `JSON` class (`stringify`/`parse`); use it to
 (de)serialise `json` columns automatically.
 
-### default_provider
+### default_provider <Badge type="info" text="method" /> {#normnanosadapter-default_provider}
 
 ```lua
 NormNanosAdapter:default_provider()
@@ -131,7 +164,7 @@ NormNanosAdapter:default_provider()
 If nanos-promise is loaded in this package (global `Promise`), use it.
 No cross-package import: the nanos package is expected to bundle nanos-promise.
 
-### get_dialect
+### get_dialect <Badge type="info" text="method" /> {#normnanosadapter-get_dialect}
 
 ```lua
 NormAdapter:get_dialect()
@@ -140,7 +173,7 @@ NormAdapter:get_dialect()
 
 Resolved dialect object.
 
-### get_dialect_name
+### get_dialect_name <Badge type="info" text="method" /> {#normnanosadapter-get_dialect_name}
 
 ```lua
 NormNanosAdapter:get_dialect_name()
@@ -153,13 +186,13 @@ return #1:
    | "sqlite"
 ```
 
-### options
+### options <Badge type="info" text="field" /> {#normnanosadapter-options}
 
 ```lua
 NormAdapterOptions
 ```
 
-### raw_execute
+### raw_execute <Badge type="info" text="method" /> {#normnanosadapter-raw_execute}
 
 ```lua
 NormNanosAdapter:raw_execute(query: string, params: any[], callback: NormExecuteCallback)
@@ -173,13 +206,13 @@ is connection-scoped and the pool may run it on another connection. Prefer a
 client-generated id (or `pool_size = 1`) if a correct insertId is critical on
 MySQL + nanos.
 
-### raw_query
+### raw_query <Badge type="info" text="method" /> {#normnanosadapter-raw_query}
 
 ```lua
 NormNanosAdapter:raw_query(query: string, params: any[], callback: NormQueryCallback)
 ```
 
-### supports_returning
+### supports_returning <Badge type="info" text="method" /> {#normnanosadapter-supports_returning}
 
 ```lua
 NormNanosAdapter:supports_returning()
@@ -191,7 +224,7 @@ SQLite, PostgreSQL and MariaDB (>= 10.5, auto-detected at init) support
 Real MySQL does not, and falls back to a best-effort `LAST_INSERT_ID()` query
 (see `raw_execute`).
 
-### supports_transactions
+### supports_transactions <Badge type="info" text="method" /> {#normnanosadapter-supports_transactions}
 
 ```lua
 NormNanosAdapter:supports_transactions()
@@ -204,7 +237,24 @@ throws rather than silently running non-atomically.
 
 ## NormOxMySQLAdapter
 
-### default_json_provider
+<small>:link: [Source: `src/adapters/oxmysql.lua`](https://github.com/JustGodWork/norm/blob/master/src/adapters/oxmysql.lua#L10)</small>
+
+| Member | Returns | Description |
+|---|---|---|
+| [`default_json_provider`](#normoxmysqladapter-default_json_provider) | `NormJsonProvider\|nil` | FiveM exposes a global `json` (`encode`/`decode`); use it to (de)serialise |
+| [`default_provider`](#normoxmysqladapter-default_provider) | `NormPromiseProvider\|nil` | FiveM resources have a native `promise` library; use it by default. |
+| [`get_dialect`](#normoxmysqladapter-get_dialect) | `NormDialect` | Resolved dialect object. |
+| [`get_dialect_name`](#normoxmysqladapter-get_dialect_name) | `"mysql"` | return #1: |
+| [`onReady`](#normoxmysqladapter-onready) | — | Wait until oxmysql has started and its connection is up, then run `cb`. |
+| [`options`](#normoxmysqladapter-options) | — |  |
+| [`ox`](#normoxmysqladapter-ox) | — | The oxmysql export. |
+| [`raw_execute`](#normoxmysqladapter-raw_execute) | — |  |
+| [`raw_query`](#normoxmysqladapter-raw_query) | — |  |
+| [`supports_returning`](#normoxmysqladapter-supports_returning) | `boolean` | Optional: whether this adapter's engine supports `INSERT ... |
+| [`supports_transactions`](#normoxmysqladapter-supports_transactions) | `boolean` | oxmysql supports interactive transactions via the `startTransaction` export. |
+| [`transaction`](#normoxmysqladapter-transaction) | — | Run an interactive transaction through the `startTransaction` export (the same |
+
+### default_json_provider <Badge type="info" text="method" /> {#normoxmysqladapter-default_json_provider}
 
 ```lua
 NormOxMySQLAdapter:default_json_provider()
@@ -214,7 +264,7 @@ NormOxMySQLAdapter:default_json_provider()
 FiveM exposes a global `json` (`encode`/`decode`); use it to (de)serialise
 `json` columns automatically.
 
-### default_provider
+### default_provider <Badge type="info" text="method" /> {#normoxmysqladapter-default_provider}
 
 ```lua
 NormOxMySQLAdapter:default_provider()
@@ -223,7 +273,7 @@ NormOxMySQLAdapter:default_provider()
 
 FiveM resources have a native `promise` library; use it by default.
 
-### get_dialect
+### get_dialect <Badge type="info" text="method" /> {#normoxmysqladapter-get_dialect}
 
 ```lua
 NormAdapter:get_dialect()
@@ -232,7 +282,7 @@ NormAdapter:get_dialect()
 
 Resolved dialect object.
 
-### get_dialect_name
+### get_dialect_name <Badge type="info" text="method" /> {#normoxmysqladapter-get_dialect_name}
 
 ```lua
 NormOxMySQLAdapter:get_dialect_name()
@@ -244,7 +294,7 @@ return #1:
    | "mysql"
 ```
 
-### onReady
+### onReady <Badge type="info" text="method" /> {#normoxmysqladapter-onready}
 
 ```lua
 NormOxMySQLAdapter:onReady(cb?: fun():any)
@@ -253,13 +303,13 @@ NormOxMySQLAdapter:onReady(cb?: fun():any)
 Wait until oxmysql has started and its connection is up, then run `cb`.
 Runs in a background thread (Wait yields), so it never blocks construction.
 
-### options
+### options <Badge type="info" text="field" /> {#normoxmysqladapter-options}
 
 ```lua
 NormAdapterOptions
 ```
 
-### ox
+### ox <Badge type="info" text="field" /> {#normoxmysqladapter-ox}
 
 ```lua
 table
@@ -267,19 +317,19 @@ table
 
 The oxmysql export.
 
-### raw_execute
+### raw_execute <Badge type="info" text="method" /> {#normoxmysqladapter-raw_execute}
 
 ```lua
 NormOxMySQLAdapter:raw_execute(query: string, params: any[], callback: NormExecuteCallback)
 ```
 
-### raw_query
+### raw_query <Badge type="info" text="method" /> {#normoxmysqladapter-raw_query}
 
 ```lua
 NormOxMySQLAdapter:raw_query(query: string, params: any[], callback: NormQueryCallback)
 ```
 
-### supports_returning
+### supports_returning <Badge type="info" text="method" /> {#normoxmysqladapter-supports_returning}
 
 ```lua
 NormAdapter:supports_returning()
@@ -292,7 +342,7 @@ auto-increment id atomically from the INSERT itself, instead of a separate
 `LAST_INSERT_ID()` / `last_insert_rowid()` query — which is connection-scoped
 and therefore unreliable across a connection pool. Defaults to false.
 
-### supports_transactions
+### supports_transactions <Badge type="info" text="method" /> {#normoxmysqladapter-supports_transactions}
 
 ```lua
 NormOxMySQLAdapter:supports_transactions()
@@ -301,7 +351,7 @@ NormOxMySQLAdapter:supports_transactions()
 
 oxmysql supports interactive transactions via the `startTransaction` export.
 
-### transaction
+### transaction <Badge type="info" text="method" /> {#normoxmysqladapter-transaction}
 
 ```lua
 NormOxMySQLAdapter:transaction(body: fun(tx_query: fun(q: string, p: any[], cb: function), tx_execute: fun(q: string, p: any[], cb: function)):boolean, finish: fun(err: any))
@@ -315,13 +365,18 @@ commit boolean. `body` already returns true=commit / false=rollback.
 
 ## NormPromiseLib
 
-### NormPromise
+<small>:link: [Source: `src/promise.lua`](https://github.com/JustGodWork/norm/blob/master/src/promise.lua#L24)</small>
 
-```lua
-NormPromise
-```
+| Member | Returns | Description |
+|---|---|---|
+| [`builtin`](#normpromiselib-builtin) | `NormPromiseProvider` | The bundled zero-dependency provider (real then-able with :next/:catch/:await). |
+| [`cfx`](#normpromiselib-cfx) | `NormPromiseProvider` | Wrap FiveM's native `promise` library. |
+| [`define`](#normpromiselib-define) | `NormPromiseProvider` | Validate a custom provider (a table with `new`/`resolve`/`reject`) and return |
+| [`from_class`](#normpromiselib-from_class) | `NormPromiseProvider` | Build a provider from any promise CLASS whose constructor is |
+| [`nanos`](#normpromiselib-nanos) | `NormPromiseProvider` | Wrap the nanos-promise `Promise` class so the ORM returns nanos promises. |
+| [`NormPromise`](#normpromiselib-normpromise) | — |  |
 
-### builtin
+### builtin <Badge type="info" text="function" /> {#normpromiselib-builtin}
 
 ```lua
 function NormPromiseLib.builtin()
@@ -334,7 +389,7 @@ The default when no provider is configured and the adapter has none.
     local db = Norm.new({ adapter = a, promise = Norm.promise.builtin() })
 ```
 
-### cfx
+### cfx <Badge type="info" text="function" /> {#normpromiselib-cfx}
 
 ```lua
 function NormPromiseLib.cfx(lib?: table)
@@ -347,7 +402,7 @@ default, so you rarely pass it explicitly.
     local db = Norm.new({ adapter = a, promise = Norm.promise.cfx() })
 ```
 
-### define
+### define <Badge type="info" text="function" /> {#normpromiselib-define}
 
 ```lua
 function NormPromiseLib.define(spec: NormPromiseProvider)
@@ -365,7 +420,7 @@ it. Use this to plug any promise system that isn't builtin/nanos/cfx.
     })
 ```
 
-### from_class
+### from_class <Badge type="info" text="function" /> {#normpromiselib-from_class}
 
 ```lua
 function NormPromiseLib.from_class(PromiseClass: fun(executor: fun(resolve: fun(value: any), reject: fun(reason: any))):any)
@@ -381,7 +436,7 @@ promise differs from nanos-promise / CFX.
     local db = Norm.new({ adapter = a, promise = Norm.promise.from_class(Promise) })
 ```
 
-### nanos
+### nanos <Badge type="info" text="function" /> {#normpromiselib-nanos}
 
 ```lua
 function NormPromiseLib.nanos(Promise: table)
@@ -394,9 +449,25 @@ On nanos this is auto-detected, so you rarely pass it explicitly.
     local db = Norm.new({ adapter = a, promise = Norm.promise.nanos(Promise) })
 ```
 
+### NormPromise <Badge type="info" text="field" /> {#normpromiselib-normpromise}
+
+```lua
+NormPromise
+```
+
 ## NormJsonLib
 
-### define
+<small>:link: [Source: `src/json.lua`](https://github.com/JustGodWork/norm/blob/master/src/json.lua#L16)</small>
+
+| Member | Returns | Description |
+|---|---|---|
+| [`define`](#normjsonlib-define) | `NormJsonProvider` | Validate a custom provider (a table with `encode`/`decode`) and return it. |
+| [`detect`](#normjsonlib-detect) | `NormJsonProvider` | Auto-detect the host's JSON library: Nanos `JSON`, then a Lua/FiveM `json`, |
+| [`nanos`](#normjsonlib-nanos) | `NormJsonProvider` | Wrap the Nanos World `JSON` class (`stringify` / `parse`). |
+| [`rapidjson`](#normjsonlib-rapidjson) | `NormJsonProvider` | Wrap a Lua/FiveM-style library exposing `encode` / `decode` (e.g. |
+| [`raw`](#normjsonlib-raw) | `NormJsonProvider` | No-op provider: `json` columns are stored and returned as raw strings (Norm's |
+
+### define <Badge type="info" text="function" /> {#normjsonlib-define}
 
 ```lua
 function NormJsonLib.define(spec: NormJsonProvider)
@@ -412,7 +483,7 @@ Validate a custom provider (a table with `encode`/`decode`) and return it.
     })
 ```
 
-### detect
+### detect <Badge type="info" text="function" /> {#normjsonlib-detect}
 
 ```lua
 function NormJsonLib.detect()
@@ -423,7 +494,7 @@ Auto-detect the host's JSON library: Nanos `JSON`, then a Lua/FiveM `json`,
 else the no-op `raw` provider. Used when no `json` option is configured and
 the adapter offers no default.
 
-### nanos
+### nanos <Badge type="info" text="function" /> {#normjsonlib-nanos}
 
 ```lua
 function NormJsonLib.nanos(JSON?: table)
@@ -436,7 +507,7 @@ global `JSON`. On nanos this is auto-detected, so you rarely pass it.
     local db = Norm.new({ adapter = a, json = Norm.json.nanos(JSON) })
 ```
 
-### rapidjson
+### rapidjson <Badge type="info" text="function" /> {#normjsonlib-rapidjson}
 
 ```lua
 function NormJsonLib.rapidjson(lib?: table)
@@ -449,7 +520,7 @@ global `json` / rapidjson, or a dkjson-like table). Defaults to the global `json
     local db = Norm.new({ adapter = a, json = Norm.json.rapidjson() }) -- uses _ENV.json
 ```
 
-### raw
+### raw <Badge type="info" text="function" /> {#normjsonlib-raw}
 
 ```lua
 function NormJsonLib.raw()

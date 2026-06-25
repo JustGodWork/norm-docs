@@ -16,19 +16,39 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Guide', link: '/guide/getting-started', activeMatch: '/guide/' },
-      { text: 'API Reference', link: '/reference/core', activeMatch: '/reference/' },
+      { text: 'API Reference', link: '/reference/norm', activeMatch: '/reference/' },
     ],
 
     sidebar: {
       '/reference/': [
         {
-          text: 'API Reference',
+          text: 'Entry point',
           items: [
-            { text: 'Core API', link: '/reference/core' },
-            { text: 'Adapters & Providers', link: '/reference/adapters' },
-            { text: 'Types & Options', link: '/reference/types' },
+            { text: 'Norm', link: '/reference/norm' },
+            { text: 'NormOrm', link: '/reference/norm-orm' },
           ],
         },
+        {
+          text: 'Models & Records',
+          items: [
+            { text: 'NormModel', link: '/reference/norm-model' },
+            { text: 'NormRecord', link: '/reference/norm-record' },
+          ],
+        },
+        {
+          text: 'Querying',
+          items: [
+            { text: 'NormQueryBuilder', link: '/reference/norm-query-builder' },
+          ],
+        },
+        {
+          text: 'Async',
+          items: [
+            { text: 'NormPromise', link: '/reference/norm-promise' },
+          ],
+        },
+        { text: 'Adapters & Providers', link: '/reference/adapters' },
+        { text: 'Types & Options', link: '/reference/types' },
       ],
       '/guide/': [
         {
