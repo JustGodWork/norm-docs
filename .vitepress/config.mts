@@ -16,9 +16,20 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Guide', link: '/guide/getting-started', activeMatch: '/guide/' },
+      { text: 'API Reference', link: '/reference/core', activeMatch: '/reference/' },
     ],
 
     sidebar: {
+      '/reference/': [
+        {
+          text: 'API Reference',
+          items: [
+            { text: 'Core API', link: '/reference/core' },
+            { text: 'Adapters & Providers', link: '/reference/adapters' },
+            { text: 'Types & Options', link: '/reference/types' },
+          ],
+        },
+      ],
       '/guide/': [
         {
           text: 'Introduction',
@@ -69,7 +80,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/JustGodWork/norm-docs/edit/main/docs/:path'
+      pattern: 'https://github.com/JustGodWork/norm-docs/edit/master/docs/:path'
     },
   }
 })
